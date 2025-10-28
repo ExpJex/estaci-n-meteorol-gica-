@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Datos del Sensor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-image: url('https://us.123rf.com/450wm/peshkov/peshkov1802/peshkov180200375/95902646-creative-glowing-digital-wallpaper-technology-innovation-and-future-concept-3d-rendering.jpg');
+      background-size: cover;
+      color: #fff;
+    }
+    #dato {
+      background: rgba(0,0,0,0.6);
+      padding: 10px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .btn-sheet {
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-top: 12px;
+      cursor: pointer;
+    }
+    .btn-sheet:hover {
+      background-color: darkgreen;
+    }
+  </style>
+</head>
+<body>
+  <h2>Datos del Sensor:</h2>
+  <pre id="dato">Cargando...</pre>
+  <button class="btn-sheet" onclick="abrirGoogleSheet()">Abrir Google Sheet</button>
+
+  <script>
+    const ESP32_IP = "http://192.168.1.100"; // 🔹 Cambia por la IP local que imprime tu ESP32 en el monitor serie
+
+    function actualizarDatos() {
+      fetch(`${ESP32_IP}/dato`)
+        .then(r => r.text())
+        .then(t => document.getElementById('dato').innerText = t)
+        .catch(err => document.getElementById('dato').innerText = "Error al conectar con la ESP32");
+    }
+
+    function abrirGoogleSheet() {
+      window.open("https://docs.google.com/spreadsheets/d/16XBLcnTylNBr-sCTaSCH70tF3_K2NFM8YSmocR12pp0/edit?gid=0#gid=0", "_blank");
+    }
+
+    setInterval(actualizarDatos, 2000);
+    actualizarDatos();
+  </script>
+</body>
+</html>
